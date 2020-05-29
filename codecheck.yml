@@ -1,0 +1,36 @@
+---
+version: https://codecheck.org.uk/spec/config/1.0
+
+paper:
+  title: >
+    Report 9: impact of non-pharmaceutical interventions (NPIs) to
+    reduce COVID-19 mortality and healthcare demand. March 16, 2020.
+  authors:
+    - name: N Ferguson
+    - name: COVID-19 Response Team
+  reference: >
+    Imperial College Preprint 
+    http://dx.doi.org/10.25561/77482
+
+
+manifest:
+  - file: GB_mitigation_release/table3.png
+    comment: manuscript Table 3  (mitigation strategies)
+  - file: GB_mitigation_release/tablea1.png
+    comment: manuscript Table A1 (mitigation strategies)
+  - file: GB_suppress_release/table4.png
+    comment: manuscript Figure 4 (suppression strategies)
+  - file: GB_suppress_release/table5.png
+    comment: manuscript Figure 5 (suppression strategies)
+
+
+codechecker:
+  - name: Stephen J. Eglen
+    ORCID: 0000-0001-8607-8025
+
+summary: >
+  Replication of key findings from Report 9 using CovidSim reimplementation.
+repository: https://github.com/codecheckers/covid-report9
+check_time: "2020-05-29 12:20:00"
+certificate: 2020-010
+report: http://doi.org/10.5281/zenodo.FIXME
