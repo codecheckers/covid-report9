@@ -185,9 +185,9 @@ foundation.
 # Citing this document
 
 Eglen, Stephen J. (2020). CODECHECK Certificate
-2020-010. Zenodo. <http://doi.org/10.5281/zenodo.3865491>
+2020-010. Zenodo. <https://doi.org/10.5281/zenodo.3865491>
 
-DOIs may take a few hours to activate after the certificate is
+	DOIs may take a few hours to activate after the certificate is
 registered.  A copy of the certificate is available in at
 <https://github.com/codecheckers/covid-report9/blob/master/codecheck/codecheck.pdf>.
 
