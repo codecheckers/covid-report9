@@ -71,18 +71,17 @@ print(xt, include.rownames=FALSE, comment=FALSE)
 ```
 
 
-WARNING: this is work in progress, please do not cite or redistribute.
-
+\clearpage
 # Summary
-
-Given the large size of each simulation, and the number of
+I was able to reproduce the results (Tables 3,4,5 and A1) from
+Report 9.  Given the large size of each simulation, and the number of
 simulations, this took significant time (about 24 hours on a
-departmental HPC server) to reproduce all the findings.  Simulations
-were repeated using the public CovidSim implementation that was first
-released in April 2020 onto Github rather than the private code used
-to generate the initial findings.  Small variations (typically a few
-percent) in the numbers were observed between Report 9 and my runs
-which are due to several factors:
+departmental HPC server) to reproduce the findings in Report 9.
+Simulations were repeated using the public CovidSim implementation,
+first released in April 2020 onto Github, rather than the private code
+used to generate the findings in Report 9.  Small variations
+(typically a few percent) in the numbers were observed between Report
+9 and my runs which are due to several factors:
 
 1. The CovidSim codebase is now deterministic.
 2. Slightly different population input files have been used.
@@ -93,8 +92,6 @@ However, although the absolute values do not match the initial report,
 the overall trends are consistent with the original report.  Note also
 that my independent run matches runs by the Imperial team as of
 2020-05-28.
-
-\clearpage
 
 # CODECHECK notes
 
@@ -109,8 +106,10 @@ workstations and for a [departmental HPC resource](https://www.maths.cam.ac.uk/c
 
 ## Input parameter files
 
-Input parameter files were provided by Prof Ferguson and are now
-available at XXXX.
+Input parameter files and R scripts were provided by Prof Ferguson and
+are now available from
+[covid-sim](https://github.com/mrc-ide/covid-sim) in the report9
+folder.
 
 ## Running the model
 
@@ -121,7 +120,7 @@ local machine or submitted as jobs to a cluster.  More details below.
 
 ### Initialisation steps
 
-In each of the Suppression and Mitigation folders, the output from
+In each of the suppression and mitigation folders, the output from
 `runonce.sh` was run to generate two further input files,
 *NetworkGB_8T.bin* and *NoInt_R0=2.4.avNE.severity.xls.* These files
 were identical in the two folders.
@@ -139,17 +138,16 @@ The list of jobs to run for each scenario was generated from the bash
 scripts
 [GB_suppress_release/batch.sh](https://github.com/codecheckers/covid-report9/blob/master/GB_suppress_release/batch.sh)
 and
-[GB_mitigation_release/batch.sh](https://github.com/codecheckers/covid-report9/tree/master/GB_mitigation_release).  These generated two job lists: 
+[GB_mitigation_release/batch.sh](https://github.com/codecheckers/covid-report9/tree/master/GB_mitigation_release/batch.sh).  These generated two job lists: 
 [GB_suppress_release/batch-jobs.txt](https://github.com/codecheckers/covid-report9/blob/master/GB_suppress_release/batch-jobs.txt)
 and
 [GB_mitigation_release/batch-jobs.txt](https://github.com/codecheckers/covid-report9/blob/master/GB_mitigation_release/batch-jobs.txt)
 
-These jobs were then run, and on a high-performance workstation took
-about 3 days, and about 1 day on a departmental HPC cluster.  To
-repeat these runs on other computers will depend on your job
-submission system.  However on a linux machine, one simple way to
-start the jobs (with -j being the number the number of jobs to run in
-parallel) is:
+These jobs took about 3 days on a 64-core workstation, and about 1 day
+on a departmental HPC cluster.  To repeat these runs on other
+computers will depend on your job submission system.  However on a
+linux machine, one simple way to start the jobs (with -j being the
+number the number of jobs to run in parallel) is:
 
 ```
 parallel -j8 < batch-jobs.txt
@@ -159,16 +157,19 @@ parallel -j8 < batch-jobs.txt
 ### Analysis
 
 Each run generated a CSV (labelled as an .xls) file in the output
-folder.  Two R scripts [xxx] provided by Prof Ferguson was used to summarise
-these runs into two summary files: [GB_suppress_release/mean8/stats_contain.csv](<https://github.com/codecheckers/covid-report9/blob/master/GB_suppress_release/mean8/stats_contain.csv>)
-and [GB_mitigation_release/MeanT8_NR10/stats_mitigation.csv](https://github.com/codecheckers/covid-report9/blob/master/GB_mitigation_release/MeanT8_NR10/stats_mitigation.csv).
+folder.  Two R scripts (both named _summariseSev.r_) provided by Prof
+Ferguson was used to summarise these runs into two summary files:
+[GB_suppress_release/mean8/stats_contain.csv](<https://github.com/codecheckers/covid-report9/blob/master/GB_suppress_release/mean8/stats_contain.csv>)
+and
+[GB_mitigation_release/MeanT8_NR10/stats_mitigation.csv](https://github.com/codecheckers/covid-report9/blob/master/GB_mitigation_release/MeanT8_NR10/stats_mitigation.csv).
 
 These files were compared against the values generated by Prof
-Ferguson and stored in the Excel spreadsheets using an R script.
-These were found to be identical.  Inserting my results into his Excel
-spreadsheet generated the same pivot tables.  I took screenshots of
-these pivot tables to include for this report.  The excel summary
-spreadsheets are available in the repository.
+Ferguson and stored in the Excel spreadsheets with *compare_stats.R*
+scripts in each strategy folder.  The results were found to be
+identical.  Inserting my results into his Excel spreadsheet generated
+the same pivot tables.  I took screenshots of these pivot tables to
+include for this report.  The Excel summary spreadsheets are available
+in the repository.
 
 
 ## Acknowledgements
@@ -186,7 +187,7 @@ foundation.
 Eglen, Stephen J. (2020). CODECHECK Certificate
 2020-010. Zenodo. <http://doi.org/10.5281/zenodo.3865491>
 
-Please note that DOIs can take 1-2 days to register after the
+Please note that DOIs may take a few hours to register after the
 certificate is registered.  A copy of the certificate is available in
 at
 <https://github.com/codecheckers/covid-report9/blob/master/codecheck/codecheck.pdf>.
@@ -200,7 +201,7 @@ code from a third party.  A CODECHECK does not check whether the
 original computation analysis is correct.  However, as all material
 required for the reproduction are freely available by following the
 links in this document, the reader can then study for themselves the
-model and data.
+code and data.
 
 \setcounter{table}{0}
 \setcounter{figure}{0}
