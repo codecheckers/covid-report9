@@ -1,4 +1,5 @@
 ## Helper script to compare stats_contains.csv with the excel spreadsheet
+## Stephen Eglen
 require(readxl)
 require(readr)
 require(dplyr)
