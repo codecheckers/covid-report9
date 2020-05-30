@@ -1,0 +1,220 @@
+---
+output:
+  pdf_document:
+    toc: false
+    includes:
+       in_header: codecheck-preamble.sty
+  html_document:
+    self_contained: false
+    toc: true
+    toc_float: false
+---
+
+```{r rsetup,eval=TRUE,include=FALSE}
+require(codecheck)
+require(knitr)
+require(rprojroot)
+require(yaml)
+require(xtable)
+require(tibble)
+require(readr)
+options(width=60)
+opts_chunk$set(cache=FALSE)
+
+root = find_root("codecheck.yml")
+```
+
+```{r codecheck_logo, echo=FALSE,results='asis'}
+latex_codecheck_logo()
+```
+
+```{r manifest, eval=TRUE, include=FALSE}
+metadata = codecheck_metadata(root)
+manifest = metadata$manifest
+
+dest_dir = file.path(root, "codecheck", "outputs")
+## Create the outputs directory if missing
+if ( !dir.exists(dest_dir) ) {
+  dir.create(dest_dir)
+}
+
+## get_outputs = function(manifest) {
+##   files = sapply(manifest, function(x) x$file)
+##   comments = sapply(manifest, function(x) x$comment)
+##   sizes = file.size(dest_files)
+##   url=sprintf('<a href="%s">%s</a>', dest_files, files)
+##   table = cbind(files, comments, sizes, url)
+##   table
+## }
+
+manifest_df = copy_manifest_files(root, manifest,
+                                  dest_dir, keep_full_path=FALSE)
+```
+
+---
+title: `r paste("CODECHECK certificate", metadata$certificate)`
+subtitle: `r codecheck:::as_latex_url(metadata$report)`
+---
+
+```{r summary_metadata, echo=FALSE, results='asis'}
+latex_summary_of_metadata(metadata)
+```
+
+```{r summary_manifest, echo=FALSE, results='asis'}
+xt = xtable(manifest_df[, c("output", "comment", "size")],
+            digits=0,
+            caption="Summary of output files generated")
+print(xt, include.rownames=FALSE, comment=FALSE)
+```
+
+
+# DRAFT
+
+WARNING: this is work in progress, please do not cite or redistribute.
+
+## To check
+
+1. Are you happy with everything public on the github repo:  
+
+2. I plan to put this work under MIT / CC0 licence for code and data.
+   You are welcome to take the batch.sh files if they are useful to you.
+
+3. Are you intending to share the two spreadsheets storing your pivot
+   tables and two results?  Are you okay for me to share my two
+   versions (not yet uploaded, but contain same results)?
+   
+4. Table A1 (my Figure C2) -- the numbers are roughly the same, but the
+   colours are the wrong way round (red --> green).
+   
+5. Are you happy with the summary below?
+   
+# Summary
+
+Given the large size of each simulation, and the number of
+simulations, this took significant time (about 24 hours on a
+departmental HPC server) to reproduce all the findings.  Simulations
+were repeated using the public CovidSim implementation that was
+released in May 2020 onto Github rather than the private code used to
+generate the initial findings.  Small variations in the numbers were
+detected between Report 9 and our runs which are due to several
+factors:
+
+1. The CovidSim codebase is now deterministic.
+2. Slightly different population input files have been used.
+3. Slight variations in the implementation of certain mitigiation
+   strategies.
+
+However, although the absolute values do not match the initial report,
+the overall trends are consistent with the original report.  Note also
+that my independent run matches runs by the Imperial team as of May
+28th 2020.
+
+\clearpage
+
+# CODECHECKER notes
+
+## Installation of CovidSim
+
+The public version of CovidSim was cloned from
+<https://github.com/mrc-ide/covid-sim>.  For these runs, the master
+version from commit b12530 (27 May 2020) was used.  This version is
+deterministic cross platform.  This was compiled for local
+workstations and for a departmental HPC resource.
+
+
+## Input parameter files
+
+Input parameter files were provided by Prof Ferguson and are now
+available at XXXX.
+
+## Running the model
+
+Powershell scripts to generate the Suppression and Mitigation results
+were converted to bash and are provided in the codecheck repo.  These
+bash scripts generate a list of jobs that can then be executed on a
+local machine or submitted as jobs to a cluster.  More details below.
+
+### Initialisation steps
+
+In each of the Suppression and Mitigation folders, the output from
+`runonce.sh` was run to generate two further input files,
+*NetworkGB_8T.bin* and *NoInt_R0=2.4.avNE.severity.xls.* These files
+were identical in the two folders.
+
+Two folders were then generated to store the results of the batch runs
+
+```
+mkdir GB_suppress_release/mean8
+mkdir GB_mitigation_release/MeanT8_NR10a
+```
+
+### Batch jobs
+
+The list of jobs to run for each scenario was generated from the bash
+scripts
+[GB_suppress_release/batch.sh](https://github.com/codecheckers/covid-report9/blob/master/GB_suppress_release/batch.sh)
+and
+[GB_mitigation_release/batch.sh](https://github.com/codecheckers/covid-report9/tree/master/GB_mitigation_release).  These generated two job lists: 
+[GB_suppress_release/batch-jobs.txt](https://github.com/codecheckers/covid-report9/blob/master/GB_suppress_release/batch-jobs.txt)
+and
+[GB_mitigation_release/batch-jobs.txt](https://github.com/codecheckers/covid-report9/blob/master/GB_mitigation_release/batch-jobs.txt)
+
+These jobs were then run, and on a high-performance workstaion took
+about 3 days, and about 1 day on our departmental HPC cluster.
+
+### Analysis
+
+Each run generated a CSV (labelled as an .xls) file in the output
+folder.  An R script provided by Prof Ferguson was used to summarise
+these runs into two summary files: [*stats_contain.csv*](<https://github.com/codecheckers/covid-report9/blob/master/GB_suppress_release/mean8/stats_contain.csv>)
+and [*stats_mitigation.csv*](https://github.com/codecheckers/covid-report9/blob/master/GB_mitigation_release/MeanT8_NR10/stats_mitigation.csv).
+
+These files were compared against the values generated by Prof
+Ferguson and stored in the Excel spreadhseets using an R script.
+These were found to be identical.  Inserting my results into his Excel
+spreadsheet generated the same pivot tables.  I took screenshots of
+these pivot tables to include for this report.
+
+
+## Acknowledgements
+
+I would like to thank Prof Ferguson and colleagues for promptly
+answering any queries I had with this reproduction.  Dr Kacper Kornet
+at the Faculty of Mathematics, University of Cambridge helped with
+installation of CovidSim and job submission scripts for the HPC
+cluster.  CODECHECK is financially supported by the Mozilla
+foundation.
+
+\setcounter{table}{0}
+\setcounter{figure}{0}
+\captionsetup[table]{labelformat=addC}
+\captionsetup[figure]{labelformat=addC}
+
+\clearpage
+
+```{r, echo=FALSE, fig.cap=manifest_df[1:4,"comment"]}
+# TODO turn into a loop 
+knitr::include_graphics(manifest_df[1, "dest"])
+cat('\n\n')
+knitr::include_graphics(manifest_df[2, "dest"])
+cat('\n\n')
+knitr::include_graphics(manifest_df[3, "dest"])
+cat('\n\n')
+knitr::include_graphics(manifest_df[4, "dest"])
+cat('\n\n')
+```
+
+\clearpage
+# About this document
+
+This document was created using [R Markdown](https://rmarkdown.rstudio.com/) using the [`codecheck`](https://github.com/codecheckers/codecheck) R package.
+`make codecheck.pdf` will regenerate the report file.
+
+```{r}
+sessionInfo()
+```
+
+```{r, include=FALSE, eval=FALSE}
+# render this document in RStudio
+rmarkdown::render("codecheck.Rmd", output_format = "pdf_document") 
+```
