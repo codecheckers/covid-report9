@@ -1,4 +1,5 @@
 #!/bin/bash
+# Author: Stephen Eglen, translated from powershell.
 allR="2.0 2.2 2.4 2.6"
 allx="60 100 200 300 400"
 allz="0.75 0.5 0.25"

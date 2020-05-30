@@ -1,4 +1,5 @@
 #!/bin/bash
+# Author: Stephen Eglen, translated from powershell.
 for R in 2.4
 do
     rs=$(echo $R | awk '{print $1/2}')
