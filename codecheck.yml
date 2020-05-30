@@ -6,11 +6,12 @@ paper:
     Report 9: impact of non-pharmaceutical interventions (NPIs) to
     reduce COVID-19 mortality and healthcare demand. March 16, 2020.
   authors:
-    - name: N Ferguson
+    - name: Neil Ferguson
+      ORCID: 0000-0002-1154-8093
     - name: COVID-19 Response Team
   reference: >
     Imperial College Preprint 
-    http://dx.doi.org/10.25561/77482
+    http://doi.org/10.25561/77482
 
 
 manifest:
