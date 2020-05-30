@@ -73,7 +73,7 @@ print(xt, include.rownames=FALSE, comment=FALSE)
 
 \clearpage
 # Summary
-I was able to reproduce the results (Tables 3,4,5 and A1) from
+I was able to reproduce the results (Tables 3, 4, 5 and A1) from
 Report 9.  Given the large size of each simulation, and the number of
 simulations, this took significant time (about 24 hours on a
 departmental HPC server) to reproduce the findings in Report 9.
@@ -187,8 +187,8 @@ foundation.
 Eglen, Stephen J. (2020). CODECHECK Certificate
 2020-010. Zenodo. <https://doi.org/10.5281/zenodo.3865491>
 
-	DOIs may take a few hours to activate after the certificate is
-registered.  A copy of the certificate is available in at
+DOIs may take a few hours to activate after the certificate is
+registered.  A copy of the certificate is available at
 <https://github.com/codecheckers/covid-report9/blob/master/codecheck/codecheck.pdf>.
 
 
