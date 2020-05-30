@@ -11,7 +11,7 @@ paper:
     - name: COVID-19 Response Team
   reference: >
     Imperial College Preprint 
-    http://doi.org/10.25561/77482
+    https://doi.org/10.25561/77482
 
 
 manifest:
@@ -34,4 +34,4 @@ summary: >
 repository: https://github.com/codecheckers/covid-report9
 check_time: "2020-05-29 12:20:00"
 certificate: 2020-010
-report: http://doi.org/10.5281/zenodo.3865491
+report: https://doi.org/10.5281/zenodo.3865491
