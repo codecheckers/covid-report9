@@ -78,7 +78,7 @@ Report 9.  Given the large size of each simulation, and the number of
 simulations, it required significant compute resource (about 24 hours
 on a departmental HPC server) to reproduce the findings in Report 9.
 Simulations were repeated using the public CovidSim implementation,
-first released in April 2020 onto Github, rather than the private code
+first released in April 2020 onto GitHub, rather than the private code
 used to generate the findings in Report 9.  Small variations
 (mostly under 5\%) in the numbers were observed between Report 9 and my
 runs.  By visual comparison of the original and replicated Tables, I
@@ -96,7 +96,7 @@ observed 3 significant differences:
 These variations between the original reported values and the
 reproductions are due to several factors:
 
-1. The CovidSim codebase is now deterministic.
+1. The CovidSim code base is now deterministic.
 2. Slightly different population input files have been used.
 3. These results are the average of NR=10 runs, rather than just one
    simulation as used in Report 9.
@@ -127,7 +127,7 @@ folder.
 ## Running the model
 
 Powershell scripts to generate the suppression and mitigation results
-were converted to bash and are provided in the codecheck repository.
+were converted to bash and are provided in the CODECHECK repository.
 These bash scripts generate a list of jobs that can then be executed
 on a local machine or submitted as jobs to a cluster.  Each job
 corresponded to running CovidSim ten times with the same parameter
@@ -171,9 +171,10 @@ parallel -j8 < batch-jobs.txt
 
 ### Analysis
 
-Each run generated a CSV (labelled as an .xls) file in the output
-folder.  Two R scripts (both named _summariseSev.r_) provided by Prof
-Ferguson were used to summarise these runs into two summary files:
+Each run generated a tab-delimited file (labelled as an .xls) file in
+the output folder.  Two R scripts (both named _summariseSev.r_)
+provided by Prof Ferguson were used to summarise these runs into two
+summary files:
 [GB_suppress_release/mean8/stats_contain.csv](<https://github.com/codecheckers/covid-report9/blob/master/GB_suppress_release/mean8/stats_contain.csv>)
 and
 [GB_mitigation_release/MeanT8_NR10/stats_mitigation.csv](https://github.com/codecheckers/covid-report9/blob/master/GB_mitigation_release/MeanT8_NR10/stats_mitigation.csv).
@@ -192,7 +193,7 @@ in the repository.
 I would like to thank Prof Ferguson and colleagues for promptly
 answering any queries I had with this reproduction.  Dr Kornet
 (Cambridge) helped with installation of CovidSim and job submission
-scripts for the HPC cluster.  Dr Kronhaus (Cambridge) and Dr Nüst
+scripts for the HPC cluster.  Dr Kronhaus (Cambridge) and Mr Nüst
 (Münster) provided comments on a draft of this document.  CODECHECK is
 financially supported by the Mozilla foundation.
 
@@ -212,7 +213,7 @@ registered.  A copy of the certificate is available at
 This certificate confirms that the codechecker could independently
 reproduce the results of a computational analysis given the data and
 code from a third party.  A CODECHECK does not check whether the
-original computation analysis is correct.  However, as all material
+original computation analysis is correct.  However, as all materials
 required for the reproduction are freely available by following the
 links in this document, the reader can then study for themselves the
 code and data.
@@ -250,3 +251,8 @@ sessionInfo()
 # render this document in RStudio
 rmarkdown::render("codecheck.Rmd", output_format = "pdf_document") 
 ```
+
+<!--  LocalWords:  HPC clearpage CovidSim CODECHECK Powershell linux
+ -->
+<!--  LocalWords:  codechecker
+ -->
