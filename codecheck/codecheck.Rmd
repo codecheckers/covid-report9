@@ -75,13 +75,26 @@ print(xt, include.rownames=FALSE, comment=FALSE)
 # Summary
 I was able to reproduce the results (Tables 3, 4, 5 and A1) from
 Report 9.  Given the large size of each simulation, and the number of
-simulations, this took significant time (about 24 hours on a
-departmental HPC server) to reproduce the findings in Report 9.
+simulations, it required significant compute resource (about 24 hours
+on a departmental HPC server) to reproduce the findings in Report 9.
 Simulations were repeated using the public CovidSim implementation,
 first released in April 2020 onto Github, rather than the private code
 used to generate the findings in Report 9.  Small variations
-(typically a few percent) in the numbers were observed between Report
-9 and my runs which are due to several factors:
+(mostly under 5\%) in the numbers were observed between Report 9 and my
+runs.  By visual comparison of the original and replicated Tables, I
+observed 3 significant differences:
+
+
+1. Table A1: R0=2.2, trigger = 3000, PC_CI_HQ_SDOL70, peak
+   beds (in thousands): 40 vs 30, a 25% decrease.
+2. Table 5: on trigger = 300, off trigger = 0.75, PC_CI_HQ_SD,
+   total deaths: 39,000 vs 43,000, a 10% increase.
+3. Table 5: on trigger = 400, off trigger = 0.75, CI_HQ_SD,
+   total deaths: 100,000 vs 110,000, a 10% increase.
+   
+
+These variations between the original reported values and the
+reproductions are due to several factors:
 
 1. The CovidSim codebase is now deterministic.
 2. Slightly different population input files have been used.
@@ -90,7 +103,7 @@ used to generate the findings in Report 9.  Small variations
 
 However, although the absolute values do not match the initial report,
 the overall trends are consistent with the original report.  Note also
-that my independent run matches runs by the Imperial team as of
+that my independent run matches results by the Imperial team as of
 2020-05-28.
 
 # CODECHECK notes
@@ -114,9 +127,11 @@ folder.
 ## Running the model
 
 Powershell scripts to generate the suppression and mitigation results
-were converted to bash and are provided in the codecheck repository.  These
-bash scripts generate a list of jobs that can then be executed on a
-local machine or submitted as jobs to a cluster.  More details below.
+were converted to bash and are provided in the codecheck repository.
+These bash scripts generate a list of jobs that can then be executed
+on a local machine or submitted as jobs to a cluster.  Each job
+corresponded to running CovidSim ten times with the same parameter
+settings.  More details below.
 
 ### Initialisation steps
 
@@ -158,7 +173,7 @@ parallel -j8 < batch-jobs.txt
 
 Each run generated a CSV (labelled as an .xls) file in the output
 folder.  Two R scripts (both named _summariseSev.r_) provided by Prof
-Ferguson was used to summarise these runs into two summary files:
+Ferguson were used to summarise these runs into two summary files:
 [GB_suppress_release/mean8/stats_contain.csv](<https://github.com/codecheckers/covid-report9/blob/master/GB_suppress_release/mean8/stats_contain.csv>)
 and
 [GB_mitigation_release/MeanT8_NR10/stats_mitigation.csv](https://github.com/codecheckers/covid-report9/blob/master/GB_mitigation_release/MeanT8_NR10/stats_mitigation.csv).
@@ -168,18 +183,18 @@ Ferguson and stored in the Excel spreadsheets with *compare_stats.R*
 scripts in each strategy folder.  The results were found to be
 identical.  Inserting my results into his Excel spreadsheet generated
 the same pivot tables.  I took screenshots of these pivot tables to
-include for this report.  The Excel summary spreadsheets are available
+include in this report.  The Excel summary spreadsheets are available
 in the repository.
 
 
 ## Acknowledgements
 
 I would like to thank Prof Ferguson and colleagues for promptly
-answering any queries I had with this reproduction.  Dr Kacper Kornet
-at the Faculty of Mathematics, University of Cambridge helped with
-installation of CovidSim and job submission scripts for the HPC
-cluster.  CODECHECK is financially supported by the Mozilla
-foundation.
+answering any queries I had with this reproduction.  Dr Kornet
+(Cambridge) helped with installation of CovidSim and job submission
+scripts for the HPC cluster.  Dr Kronhaus (Cambridge) and Dr Nüst
+(Münster) provided comments on a draft of this document.  CODECHECK is
+financially supported by the Mozilla foundation.
 
 
 # Citing this document
