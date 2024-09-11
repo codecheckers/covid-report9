@@ -9,9 +9,7 @@ paper:
     - name: Neil Ferguson
       ORCID: 0000-0002-1154-8093
     - name: COVID-19 Response Team
-  reference: >
-    Imperial College Preprint 
-    https://doi.org/10.25561/77482
+  reference: https://doi.org/10.25561/77482
 
 
 manifest:
